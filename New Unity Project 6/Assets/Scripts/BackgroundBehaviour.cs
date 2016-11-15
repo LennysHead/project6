@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class BackgroundBehaviour : MonoBehaviour
 {
-
+    
     public GameObject player;
     Background background = new Background();
     Sprite sprite = new Sprite();
