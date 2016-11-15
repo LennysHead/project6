@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 public class BackgroundBehaviour : MonoBehaviour
 {
-    
+    //Test-Kommentar
+    int test = 0;
     public GameObject player;
     Background background = new Background();
     Sprite sprite = new Sprite();
