@@ -20,6 +20,8 @@ public class BackgroundBehaviour : MonoBehaviour
     void Start()
     {
         background.generatePlayGround();
+        playGround = background.getPlayground();
+        gameObjectArray = background.getGameObjectArray();
     }
 
     // Update is called once per frame
@@ -27,10 +29,11 @@ public class BackgroundBehaviour : MonoBehaviour
     {
         if (player.GetComponent<Playerehaviour>().getState() == 1)
         {
+            
             playerPath[player.GetComponent<Playerehaviour>().getX(), player.GetComponent<Playerehaviour>().getY()] = 1;
             sprite = Resources.Load<Sprite>("BlockPlayer");
             gameObjectArray[player.GetComponent<Playerehaviour>().getX(), player.GetComponent<Playerehaviour>().getY()].GetComponent<SpriteRenderer>().sprite = sprite;
-            player.GetComponent<Playerehaviour>().setState(Constants.READY);
+            
         }
         if (player.GetComponent<Playerehaviour>().getState() == 2)
         {
@@ -46,6 +49,11 @@ public class BackgroundBehaviour : MonoBehaviour
                 }
             }
         }
+    }
+
+    private Boolean pathIsMarked()
+    {
+        return true;
     }
 
     /**

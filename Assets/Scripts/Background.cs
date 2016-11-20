@@ -189,17 +189,9 @@ public class Background{
         {
             for (int i = 0; i < 32; i++)
             {
-                if (playGround[i, j] == 1)
+                if (checkIfPath(i, j))
                 {
-                    sprite = Resources.Load<Sprite>("BackgroundBlock");
-
-                    gameObjectArray[i, j] = new GameObject("Block");
-                    gameObjectArray[i, j].transform.position = new Vector3(-7.176f + (i * 0.49f), 3.607f + (-j * 0.49f));
-                    gameObjectArray[i, j].AddComponent<SpriteRenderer>();
-                    gameObjectArray[i, j].GetComponent<SpriteRenderer>().sprite = sprite;
-                    gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingLayerName = "Background";
-
-
+                    createPath(i, j);
                 }
             }
         }
@@ -220,6 +212,44 @@ public class Background{
         {
             walls.RemoveAt(index);
         }
+    }
+
+    /**
+     * Method to check, if the current position is part of the maze, or a wall
+     */ 
+    private Boolean checkIfPath(int i, int j)
+    {
+        if(playGround[i,j] == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Method to set the particular position as walkable part of the maze
+     */
+    private void createPath(int i, int j)
+    {
+        sprite = Resources.Load<Sprite>("BackgroundBlock");
+
+        gameObjectArray[i, j] = new GameObject("Path");
+        gameObjectArray[i, j].transform.position = new Vector3(-7.176f + (i * 0.49f), 3.607f + (-j * 0.49f));
+        gameObjectArray[i, j].AddComponent<SpriteRenderer>();
+        gameObjectArray[i, j].GetComponent<SpriteRenderer>().sprite = sprite;
+        gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingLayerName = "Background";
+    }
+
+    public int[,] getPlayground()
+    {
+        return playGround;
+    }
+    public GameObject[,] getGameObjectArray()
+    {
+        return gameObjectArray;
     }
 
 }
