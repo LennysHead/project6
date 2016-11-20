@@ -7,17 +7,20 @@ using System;
 public class Background{
 
     int[,] playGround = new int[32, 15];
+    GameObject[,] gameObjectArray = new GameObject[32, 15];
     List<Position> walls = new List<Position>();
     System.Random rnd = new System.Random();
+    Sprite sprite = new Sprite();
 
     public Background()
     {
         
     }
 
-    public int[,] generatePlayGround()
+    public void generatePlayGround()
     {
-        return buildPath(playGround);
+        buildPath(playGround);
+        drawBackground(playGround);
     }
 
     /*
@@ -175,6 +178,31 @@ public class Background{
         playGround[currentPos.getX(), currentPos.getY()] = 1;
         checkOnWalls(currentPos);
         walls.RemoveAt(index);
+    }
+
+    /**
+     * Method to draw the Labyrinth in which the players are moving
+     */
+    private void drawBackground(int[,] playGround)
+    {
+        for (int j = 0; j < 15; j++)
+        {
+            for (int i = 0; i < 32; i++)
+            {
+                if (playGround[i, j] == 1)
+                {
+                    sprite = Resources.Load<Sprite>("BackgroundBlock");
+
+                    gameObjectArray[i, j] = new GameObject("Block");
+                    gameObjectArray[i, j].transform.position = new Vector3(-7.176f + (i * 0.49f), 3.607f + (-j * 0.49f));
+                    gameObjectArray[i, j].AddComponent<SpriteRenderer>();
+                    gameObjectArray[i, j].GetComponent<SpriteRenderer>().sprite = sprite;
+                    gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingLayerName = "Background";
+
+
+                }
+            }
+        }
     }
 
     /**
