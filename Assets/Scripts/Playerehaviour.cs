@@ -16,6 +16,7 @@ public class Playerehaviour : MonoBehaviour {
     void Start () {
         playGround = background.GetComponent<BackgroundBehaviour>().getPlayGround();
         transform.position = new Vector3(0.18f, 0.172f);
+        Player player = new Player(transform.name);
         posX = 15;
         posY = 7;
         }
@@ -30,6 +31,7 @@ public class Playerehaviour : MonoBehaviour {
                 transform.position = new Vector3(transform.position.x, speed);
                 posY--;
             }
+          
 
             
         }
@@ -61,8 +63,6 @@ public class Playerehaviour : MonoBehaviour {
                 transform.position = new Vector3(speed, transform.position.y);
                 posX++;
             }
-
-           
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
