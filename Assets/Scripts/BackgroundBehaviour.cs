@@ -12,7 +12,6 @@ public class BackgroundBehaviour : MonoBehaviour
     Sprite sprite = new Sprite();
     GameObject[,] gameObjectArray = new GameObject[32, 15];
     int[,] playerPath = new int[32, 15];
-
     int[,] playGround = new int[32, 15];
 
 
@@ -27,17 +26,31 @@ public class BackgroundBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.GetComponent<Playerehaviour>().getState() == 1)
+        switch (checkPath())
         {
-            
-            playerPath[player.GetComponent<Playerehaviour>().getX(), player.GetComponent<Playerehaviour>().getY()] = 1;
-            sprite = Resources.Load<Sprite>("BlockPlayer");
-            gameObjectArray[player.GetComponent<Playerehaviour>().getX(), player.GetComponent<Playerehaviour>().getY()].GetComponent<SpriteRenderer>().sprite = sprite;
-            
+            case 1: markPath();
+                    break;
+            case 2: resetPath();
+                    break;
+            default: break;
         }
-        if (player.GetComponent<Playerehaviour>().getState() == 2)
-        {
-            for (int i = 0; i < 32; i++)
+    }
+
+    /**
+     * Mark the walked tiles as visited
+     */ 
+    private void markPath()
+    {
+        playerPath[player.GetComponent<Playerehaviour>().getX(), player.GetComponent<Playerehaviour>().getY()] = 1;
+        sprite = Resources.Load<Sprite>("BlockPlayer");
+        gameObjectArray[player.GetComponent<Playerehaviour>().getX(), player.GetComponent<Playerehaviour>().getY()].GetComponent<SpriteRenderer>().sprite = sprite;
+    }
+    /**
+     * And reset the marked path
+     */
+    private void resetPath()
+    {
+       for (int i = 0; i < 32; i++)
             {
                 for (int j = 0; j < 15; j++)
                 {
@@ -48,12 +61,13 @@ public class BackgroundBehaviour : MonoBehaviour
                     }
                 }
             }
-        }
     }
-
-    private Boolean pathIsMarked()
+    /**
+     * check the state of the Player
+     */
+    private int checkPath()
     {
-        return true;
+        return player.GetComponent<Playerehaviour>().getState();
     }
 
     /**
