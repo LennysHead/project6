@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class Playerehaviour : MonoBehaviour {
 
+    string name;
+    List<string> moving = new List<string>();
     int posX;
     int posY;
     int[,] playGround = new int[31, 14];
     int state = 0;
-    GameObject[,] gameObjectArray = new GameObject[31, 14];
-    Sprite sprite;
     public GameObject background;
     // Use this for initialization
     void Start () {
         playGround = background.GetComponent<BackgroundBehaviour>().getPlayGround();
+        transform.position = new Vector3(0.18f, 0.172f);
         posX = 15;
         posY = 7;
-        transform.position = new Vector3(0.18f, 0.172f);
-
         }
 	
 	// Update is called once per frame
@@ -41,10 +41,7 @@ public class Playerehaviour : MonoBehaviour {
                 transform.position = new Vector3(transform.position.x, speed);
                 posY++;
             } 
-            
-                
-            
-            
+ 
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -102,4 +99,5 @@ public class Playerehaviour : MonoBehaviour {
     {
         this.state = state;
     }
+
 }
