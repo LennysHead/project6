@@ -32,9 +32,9 @@ public class Background{
     {
         int index = 0;
         Position currentPos = locateStartingPoint();
-
+        currentPos.setPos(0, 0);
         prepareStartingPont(currentPos);
-
+        
         generateMaze(currentPos, index);
 
         return playGround;
@@ -45,20 +45,19 @@ public class Background{
      */
     public void checkOnWalls(Position currentPos)
     {
-
-        if (currentPos.getX() + 1 < 31 && currentPos.getX() + 1 != Constants.MAZE)
+        if (currentPos.getX() + 1 < 31 && playGround[currentPos.getX() + 1, currentPos.getY()] != Constants.MAZE)
         {
             walls.Add(new Position(currentPos.getX() + 1, currentPos.getY()));
         }
-        if (currentPos.getX() - 1 >= 0 && currentPos.getX() - 1 != Constants.MAZE)
+        if (currentPos.getX() - 1 >= 0 && playGround[currentPos.getX() - 1, currentPos.getY()] != Constants.MAZE)
         {
             walls.Add(new Position(currentPos.getX() - 1, currentPos.getY()));
         }
-        if (currentPos.getY() + 1 < 14 && currentPos.getY() + 1 != Constants.MAZE)
+        if (currentPos.getY() + 1 < 14 && playGround[currentPos.getX(), currentPos.getY() + 1] != Constants.MAZE)
         {
             walls.Add(new Position(currentPos.getX(), currentPos.getY() + 1));
         }
-        if (currentPos.getY() - 1 >= 0 && currentPos.getY() - 1 != Constants.MAZE)
+        if (currentPos.getY() - 1 >= 0 && playGround[currentPos.getX(), currentPos.getY() - 1] != Constants.MAZE)
         {
             walls.Add(new Position(currentPos.getX(), currentPos.getY() - 1));
         }
@@ -134,7 +133,7 @@ public class Background{
      */
     private Boolean checkEndOfPlayGround(Position currentPos)
     {
-        if (currentPos.getX() == 32 || currentPos.getX() == 0 || currentPos.getY() == 14 || currentPos.getY() == 0)
+        if (currentPos.getX() == 32 || currentPos.getY() == 14)
         {
             return true;
         }
@@ -150,19 +149,20 @@ public class Background{
     private int adjacentPath(Position currentPos)
     {
         int counter = 0;
-        if (playGround[currentPos.getX() + 1, currentPos.getY()] == 1)
+
+        if (currentPos.getX()+1 < 32 && playGround[currentPos.getX() + 1, currentPos.getY()] == 1)
         {
             counter++;
         }
-        if (playGround[currentPos.getX() - 1, currentPos.getY()] == 1)
+        if (currentPos.getX()-1 >= 0 && playGround[currentPos.getX() - 1, currentPos.getY()] == 1)
         {
             counter++;
         }
-        if (playGround[currentPos.getX(), currentPos.getY() + 1] == 1)
+        if (currentPos.getY()+1 < 14 && playGround[currentPos.getX(), currentPos.getY() + 1] == 1)
         {
             counter++;
         }
-        if (playGround[currentPos.getX(), currentPos.getY() - 1] == 1)
+        if (currentPos.getY()-1 >=0 && playGround[currentPos.getX(), currentPos.getY() - 1] == 1)
         {
             counter++;
         }
