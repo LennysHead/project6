@@ -27,8 +27,5 @@ public class Player{
             UnityEngine.Debug.Log("Test");
         }
     }
-
-    private void movePlayer_0()
-    {
         
 }
