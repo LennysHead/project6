@@ -16,7 +16,7 @@ public class Playerehaviour : MonoBehaviour {
     void Start () {
         playGround = background.GetComponent<BackgroundBehaviour>().getPlayGround();
         transform.position = new Vector3(0.18f, 0.172f);
-        Player player = new Player(transform.name);
+        
         posX = 15;
         posY = 7;
         }

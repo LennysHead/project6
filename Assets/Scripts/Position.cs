@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Position{
 
     int x;
     int y;
+    Boolean isVisited;
 
 	public Position(int x, int y)
     {
         this.x = x;
         this.y = y;
+        isVisited = true;
     }
 
     public void setX(int x)
@@ -36,5 +39,15 @@ public class Position{
     {
         this.x = x;
         this.y = y;
+    }
+
+    public void setVisited(Boolean b)
+    {
+        this.isVisited = b;
+    }
+
+    public Boolean getVisited()
+    {
+        return isVisited;
     }
 }
