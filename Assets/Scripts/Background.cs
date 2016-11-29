@@ -19,8 +19,10 @@ public class Background{
 
     public void generatePlayGround()
     {
+
         buildPath(playGround);
         drawBackground(playGround);
+        findForms(playGround);
     }
 
     /*
@@ -241,6 +243,21 @@ public class Background{
         gameObjectArray[i, j].AddComponent<SpriteRenderer>();
         gameObjectArray[i, j].GetComponent<SpriteRenderer>().sprite = sprite;
         gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingLayerName = "Background";
+    }
+
+    private void findForms(int[, ] playGround)
+    {
+        for(int i = 0; i < 32; i++)
+        {
+            for(int j = 0; j< 15; j++)
+            {
+                if(i == 0 && j == 0 && playGround[0,0] == 1)
+                {
+                    Form form = new Form(playGround, new Position(0,0));
+                }
+            }
+        }
+
     }
 
     public int[,] getPlayground()
