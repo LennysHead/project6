@@ -12,7 +12,7 @@ public class BackgroundBehaviour : MonoBehaviour
     Sprite sprite = new Sprite();
     GameObject[,] gameObjectArray = new GameObject[32, 15];
     int[,] playerPath = new int[32, 15];
-    int[,] playGround = new int[32, 15];
+    Position[,] playGround = new Position[32, 15];
 
 
     // Use this for initialization
@@ -21,6 +21,7 @@ public class BackgroundBehaviour : MonoBehaviour
         background.generatePlayGround();
         playGround = background.getPlayground();
         gameObjectArray = background.getGameObjectArray();
+        
     }
 
     // Update is called once per frame
@@ -81,7 +82,7 @@ public class BackgroundBehaviour : MonoBehaviour
     /**
      * Getter for the playGround
      */ 
-    public int[,] getPlayGround()
+    public Position[,] getPlayGround()
     {
         return playGround;
     }

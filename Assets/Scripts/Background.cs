@@ -6,7 +6,7 @@ using System;
 
 public class Background{
 
-    int[,] playGround = new int[32, 15];
+    Position[,] playGround = new Position[32, 15];
     GameObject[,] gameObjectArray = new GameObject[32, 15];
     List<Position> walls = new List<Position>();
     System.Random rnd = new System.Random();
@@ -28,7 +28,7 @@ public class Background{
     * Es wird zunächst nach oben gegangen
     * Anschließend wird rekursiv jedes gesetzte Objekt in andere Richtungen gemalt
     */
-    private int[,] buildPath(int[,] playGround)
+    private Position[,] buildPath(Position[,] playGround)
     {
         int index = 0;
         Position currentPos = locateStartingPoint();
@@ -45,19 +45,19 @@ public class Background{
      */
     public void checkOnWalls(Position currentPos)
     {
-        if (currentPos.getX() + 1 < 31 && playGround[currentPos.getX() + 1, currentPos.getY()] != Constants.MAZE)
+        if (currentPos.getX() + 1 < 31 && playGround[currentPos.getX() + 1, currentPos.getY()] == null)
         {
             walls.Add(new Position(currentPos.getX() + 1, currentPos.getY()));
         }
-        if (currentPos.getX() - 1 >= 0 && playGround[currentPos.getX() - 1, currentPos.getY()] != Constants.MAZE)
+        if (currentPos.getX() - 1 >= 0 && playGround[currentPos.getX() - 1, currentPos.getY()] == null)
         {
             walls.Add(new Position(currentPos.getX() - 1, currentPos.getY()));
         }
-        if (currentPos.getY() + 1 < 14 && playGround[currentPos.getX(), currentPos.getY() + 1] != Constants.MAZE)
+        if (currentPos.getY() + 1 < 14 && playGround[currentPos.getX(), currentPos.getY() + 1] == null)
         {
             walls.Add(new Position(currentPos.getX(), currentPos.getY() + 1));
         }
-        if (currentPos.getY() - 1 >= 0 && playGround[currentPos.getX(), currentPos.getY() - 1] != Constants.MAZE)
+        if (currentPos.getY() - 1 >= 0 && playGround[currentPos.getX(), currentPos.getY() - 1] != null)
         {
             walls.Add(new Position(currentPos.getX(), currentPos.getY() - 1));
         }
@@ -106,7 +106,7 @@ public class Background{
      */
     private void prepareStartingPont(Position currentPos)
     {
-        playGround[currentPos.getX(), currentPos.getY()] = 1;
+        playGround[currentPos.getX(), currentPos.getY()] = new Position(currentPos.getX(), currentPos.getY());
         walls.Add(currentPos);
         checkOnWalls(currentPos);
     }
@@ -150,19 +150,19 @@ public class Background{
     {
         int counter = 0;
 
-        if (currentPos.getX()+1 < 32 && playGround[currentPos.getX() + 1, currentPos.getY()] == 1)
+        if (currentPos.getX()+1 < 32 && playGround[currentPos.getX() + 1, currentPos.getY()]!= null)
         {
             counter++;
         }
-        if (currentPos.getX()-1 >= 0 && playGround[currentPos.getX() - 1, currentPos.getY()] == 1)
+        if (currentPos.getX()-1 >= 0 && playGround[currentPos.getX() - 1, currentPos.getY()] != null)
         {
             counter++;
         }
-        if (currentPos.getY()+1 < 14 && playGround[currentPos.getX(), currentPos.getY() + 1] == 1)
+        if (currentPos.getY()+1 < 14 && playGround[currentPos.getX(), currentPos.getY() + 1] != null)
         {
             counter++;
         }
-        if (currentPos.getY()-1 >=0 && playGround[currentPos.getX(), currentPos.getY() - 1] == 1)
+        if (currentPos.getY()-1 >=0 && playGround[currentPos.getX(), currentPos.getY() - 1] != null)
         {
             counter++;
         }
@@ -175,7 +175,7 @@ public class Background{
      */
     private void prepareNextPoint(Position currentPos, int index)
     {
-        playGround[currentPos.getX(), currentPos.getY()] = 1;
+        playGround[currentPos.getX(), currentPos.getY()] = new Position(currentPos.getX(), currentPos.getY());
         checkOnWalls(currentPos);
         walls.RemoveAt(index);
     }
@@ -183,7 +183,7 @@ public class Background{
     /**
      * Method to draw the Labyrinth in which the players are moving
      */
-    private void drawBackground(int[,] playGround)
+    private void drawBackground(Position[,] playGround)
     {
         for (int j = 0; j < 15; j++)
         {
@@ -219,7 +219,7 @@ public class Background{
      */ 
     private Boolean checkIfPath(int i, int j)
     {
-        if(playGround[i,j] == 1)
+        if(playGround[i,j] != null)
         {
             return true;
         }
@@ -243,7 +243,7 @@ public class Background{
         gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingLayerName = "Background";
     }
 
-    public int[,] getPlayground()
+    public Position[,] getPlayground()
     {
         return playGround;
     }

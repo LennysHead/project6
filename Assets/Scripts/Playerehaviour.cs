@@ -9,7 +9,7 @@ public class Playerehaviour : MonoBehaviour {
     List<string> moving = new List<string>();
     int posX;
     int posY;
-    int[,] playGround = new int[31, 14];
+    Position[,] playGround = new Position[31, 14];
     int state = 0;
     public GameObject background;
     // Use this for initialization
@@ -25,7 +25,7 @@ public class Playerehaviour : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.W))
         {
-          if(playGround[posX, posY-1] == 1)
+          if(playGround[posX, posY-1] != null)
             {
                 var speed = transform.position.y + 0.49f;
                 transform.position = new Vector3(transform.position.x, speed);
@@ -37,7 +37,7 @@ public class Playerehaviour : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-           if(playGround[posX, posY + 1] ==1)
+           if(playGround[posX, posY + 1] != null)
             {
                 var speed = transform.position.y - 0.49f;
                 transform.position = new Vector3(transform.position.x, speed);
@@ -47,7 +47,7 @@ public class Playerehaviour : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-           if(playGround[posX-1, posY] == 1)
+           if(playGround[posX-1, posY] != null)
             {
                 var speed = transform.position.x - 0.49f;
                 transform.position = new Vector3(speed, transform.position.y);
@@ -57,7 +57,7 @@ public class Playerehaviour : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            if(playGround[posX + 1, posY] == 1)
+            if(playGround[posX + 1, posY] != null)
             {
                 var speed = transform.position.x + 0.49f;
                 transform.position = new Vector3(speed, transform.position.y);
