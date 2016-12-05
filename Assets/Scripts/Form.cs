@@ -21,9 +21,7 @@ public class Form{
         {
             UnityEngine.Debug.Log("Element:" + i + ", X: " + endForm[i].getX() + ", Y: " + endForm[i].getY());
         }
-        UnityEngine.Debug.Log(endForm.Count);
-        
-        
+        UnityEngine.Debug.Log(endForm.Count); 
     }
 
     /**
@@ -220,6 +218,9 @@ public class Form{
                 
     }
 
+    /**
+     * Reset sorting components
+     */ 
     private void initiateSort()
     {
         index = 0;
@@ -227,6 +228,9 @@ public class Form{
         
     }
     
+    /**
+     * Sort for y variable
+     */ 
     private void sortY()
     {
         Position tmp;
@@ -247,6 +251,9 @@ public class Form{
         }
     }
 
+    /**
+     * Sort for x variable
+     */ 
     private void sortX()
     {
         Position tmp;
