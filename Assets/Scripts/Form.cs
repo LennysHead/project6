@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Collections;
 
 public class Form{
-    List<Position> test = new List<Position>();
+    List<Position> endForm = new List<Position>();
     List<Position> tmpPosition = new List<Position>();
+    Position startingPos;
     int counter;
     System.Random rnd = new System.Random();
     int index;
@@ -12,14 +13,56 @@ public class Form{
 
     public Form(int[,] playGround, Position startingPos)
     {
+        initiate(playGround, startingPos);
+        createForm();
+        UnityEngine.Debug.Log(endForm.Count);
+    }
+
+    /**
+     * Method to check, if the adjacent tiles are usable paths
+     */ 
+    private void checkOnWalls()
+    {
         
+        if(checkRight())
+        {
+            addRight();  
+        }
+        if (checkLeft())
+        {
+            addLeft();
+        }
+        if (checkBottom())
+        {
+            addBottom();
+        }
+        if (checkTop())
+        {
+            addTop();
+        }
+        checkLastTile();
+        
+    }
+
+    /**
+     * overwrite the existing playGround with the current playGround
+     * define size of form
+     */ 
+    private void initiate(int[,] playGround, Position startingPos)
+    {
         this.playGround = playGround;
+        this.startingPos = startingPos;
         counter = 5;
+        tmpPosition.Add(new Position(startingPos.getX(), startingPos.getY()));
+        //tmpPosition.Add(endForm[0]);
+        checkOnWalls();
+    }
 
-        test.Add(new Position(startingPos.getX(), startingPos.getY()));
-        tmpPosition.Add(test[0]);
-        checkOnWalls(startingPos);
-
+    /**
+     * Method for creating the form
+     */
+    private void createForm()
+    {
         while (counter != 0)
         {
             if (tmpPosition.Count == 1)
@@ -29,57 +72,130 @@ public class Form{
             else
             {
                 index = rnd.Next(1, tmpPosition.Count);
-                
+
                 startingPos = tmpPosition[index];
             }
-            
-            checkOnWalls(startingPos);
+
+            checkOnWalls();
         }
 
     }
 
-    private void checkOnWalls(Position startingPos)
+    /**
+     * check, if the right tile is usable
+     */
+    private bool checkRight()
     {
-        //TODO Add IsVisited zur Überprüfung
         if(startingPos.getX() + 1 < 32 && playGround[startingPos.getX() + 1, startingPos.getY()] == 1)
         {
-            test.Add(new Position(startingPos.getX() + 1, startingPos.getY()));
-            tmpPosition.Add(new Position(startingPos.getX() + 1, startingPos.getY()));
-            counter--;
-            playGround[startingPos.getX() + 1, startingPos.getY()] = 2;
-        }
-        if (startingPos.getX() - 1 >= 0 && playGround[startingPos.getX() - 1, startingPos.getY()] == 1)
+            return true;
+        }else
         {
-            test.Add(new Position(startingPos.getX() - 1, startingPos.getY()));
-            tmpPosition.Add(new Position(startingPos.getX() - 1, startingPos.getY()));
-            counter--;
-            playGround[startingPos.getX() - 1, startingPos.getY()] = 2;
+            return false;
         }
+    }
+
+    /**
+     * check, if the left tile is usable
+     */
+    private bool checkLeft()
+    {
+        if(startingPos.getX() - 1 >= 0 && playGround[startingPos.getX() - 1, startingPos.getY()] == 1)
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * check, if the tile down under is usable
+     */
+    private bool checkBottom()
+    {
         if (startingPos.getY() + 1 < 15 && playGround[startingPos.getX(), startingPos.getY() + 1] == 1)
         {
-            test.Add(new Position(startingPos.getX(), startingPos.getY() + 1));
-            tmpPosition.Add(new Position(startingPos.getX(), startingPos.getY() + 1));
-            counter--;
-            playGround[startingPos.getX(), startingPos.getY() + 1] = 2;
+            return true;
         }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * check, if the tile above is usable
+     */
+    private bool checkTop()
+    {
         if (startingPos.getY() - 1 >= 0 && playGround[startingPos.getX(), startingPos.getY() - 1] == 1)
         {
-            test.Add(new Position(startingPos.getX(), startingPos.getY()-1));
-            tmpPosition.Add(new Position(startingPos.getX(), startingPos.getY() - 1));
-            counter--;
-            playGround[startingPos.getX(), startingPos.getY() - 1] = 2;
+            return true;
         }
+        else
+        {
+            return false;
+        }
+    }
 
+    /**
+     * Method to add the right tile to current form
+     */
+    private void addRight()
+    {
+        endForm.Add(new Position(startingPos.getX() + 1, startingPos.getY()));
+        tmpPosition.Add(new Position(startingPos.getX() + 1, startingPos.getY()));
+        counter--;
+        playGround[startingPos.getX() + 1, startingPos.getY()] = 2;
+    }
+
+    /**
+     * add the left tile to the current form
+     */
+    private void addLeft()
+    {
+        endForm.Add(new Position(startingPos.getX() - 1, startingPos.getY()));
+        tmpPosition.Add(new Position(startingPos.getX() - 1, startingPos.getY()));
+        counter--;
+        playGround[startingPos.getX() - 1, startingPos.getY()] = 2;
+
+    }
+
+    /**
+     * add bottom tile to the current form
+     */
+    private void addBottom()
+    {
+        endForm.Add(new Position(startingPos.getX(), startingPos.getY() + 1));
+        tmpPosition.Add(new Position(startingPos.getX(), startingPos.getY() + 1));
+        counter--;
+        playGround[startingPos.getX(), startingPos.getY() + 1] = 2;
+    }
+
+
+    /**
+     * add top tile to the current form
+     */
+    private void addTop()
+    {
+        endForm.Add(new Position(startingPos.getX(), startingPos.getY() - 1));
+        tmpPosition.Add(new Position(startingPos.getX(), startingPos.getY() - 1));
+        counter--;
+        playGround[startingPos.getX(), startingPos.getY() - 1] = 2;
+    }
+
+    private void checkLastTile()
+    {
         if (tmpPosition.Count == 1)
         {
             tmpPosition.Remove(startingPos);
-        }else
+        }
+        else
         {
             tmpPosition.RemoveAt(index);
         }
-        
-        
-        
+
     }
-	
+
 }

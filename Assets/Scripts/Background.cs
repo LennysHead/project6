@@ -254,6 +254,7 @@ public class Background{
                 if(i == 0 && j == 0 && playGround[0,0] == 1)
                 {
                     Form form = new Form(playGround, new Position(0,0));
+                    
                 }
             }
         }
