@@ -9,13 +9,21 @@ public class Form{
     int counter;
     System.Random rnd = new System.Random();
     int index;
+    int end;
     int[,] playGround;
 
     public Form(int[,] playGround, Position startingPos)
     {
         initiate(playGround, startingPos);
         createForm();
+        sort();
+        for (int i = 0; i < endForm.Count; i++)
+        {
+            UnityEngine.Debug.Log("Element:" + i + ", X: " + endForm[i].getX() + ", Y: " + endForm[i].getY());
+        }
         UnityEngine.Debug.Log(endForm.Count);
+        
+        
     }
 
     /**
@@ -185,6 +193,9 @@ public class Form{
         playGround[startingPos.getX(), startingPos.getY() - 1] = 2;
     }
 
+    /**
+     * check, if the current position is the last element in the list
+     */
     private void checkLastTile()
     {
         if (tmpPosition.Count == 1)
@@ -196,6 +207,64 @@ public class Form{
             tmpPosition.RemoveAt(index);
         }
 
+    }
+    /**
+     * Method to sort the elements of the form
+     */
+    private void sort()
+    {
+        initiateSort();
+        sortY();
+        initiateSort();
+        sortX();
+                
+    }
+
+    private void initiateSort()
+    {
+        index = 0;
+        end = endForm.Count;
+        
+    }
+    
+    private void sortY()
+    {
+        Position tmp;
+        while (end != 0)
+        {
+            index = 0;
+            while (index < end)
+            {
+                if (index < endForm.Count - 1 && endForm[index].getY() > endForm[index + 1].getY())
+                {
+                    tmp = endForm[index];
+                    endForm[index] = endForm[index + 1];
+                    endForm[index + 1] = tmp;
+                }
+                index++;
+            }
+            end--;
+        }
+    }
+
+    private void sortX()
+    {
+        Position tmp;
+        while (end != 0)
+        {
+            index = 0;
+            while (index < end)
+            {
+                if (index < endForm.Count - 1 && endForm[index].getX() > endForm[index + 1].getX())
+                {
+                    tmp = endForm[index];
+                    endForm[index] = endForm[index + 1];
+                    endForm[index + 1] = tmp;
+                }
+                index++;
+            }
+            end--;
+        }
     }
 
 }
