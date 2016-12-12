@@ -7,6 +7,7 @@ public class Playerehaviour : MonoBehaviour {
 
     string name;
     List<string> moving = new List<string>();
+    public int score = 0;
     int posX;
     int posY;
     int[,] playGround = new int[31, 14];
@@ -25,7 +26,7 @@ public class Playerehaviour : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.W))
         {
-          if(playGround[posX, posY-1] == 1)
+          if(playGround[posX, posY-1] >= 1)
             {
                 var speed = transform.position.y + 0.49f;
                 transform.position = new Vector3(transform.position.x, speed);
@@ -37,7 +38,7 @@ public class Playerehaviour : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-           if(playGround[posX, posY + 1] ==1)
+           if(playGround[posX, posY + 1] >= 1)
             {
                 var speed = transform.position.y - 0.49f;
                 transform.position = new Vector3(transform.position.x, speed);
@@ -47,7 +48,7 @@ public class Playerehaviour : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-           if(playGround[posX-1, posY] == 1)
+           if(playGround[posX-1, posY] >= 1)
             {
                 var speed = transform.position.x - 0.49f;
                 transform.position = new Vector3(speed, transform.position.y);
@@ -57,7 +58,7 @@ public class Playerehaviour : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            if(playGround[posX + 1, posY] == 1)
+            if(playGround[posX + 1, posY] >= 1)
             {
                 var speed = transform.position.x + 0.49f;
                 transform.position = new Vector3(speed, transform.position.y);
@@ -100,4 +101,8 @@ public class Playerehaviour : MonoBehaviour {
         this.state = state;
     }
 
+    public int getScore()
+    {
+        return score;
+    }
 }

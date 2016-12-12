@@ -4,6 +4,7 @@ using System.Collections;
 public class Player{
 
     int order = 1;
+   
     string name;
     int[,] playGround = new int[32, 15];
     int state;

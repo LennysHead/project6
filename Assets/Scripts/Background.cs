@@ -247,6 +247,9 @@ public class Background{
         gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingLayerName = "Background";
     }
 
+    /**
+     * local method to create a form
+     */
     private void findForms(int[, ] playGround)
     {
         Form foo = new Form(playGround, new Position(0, 0));
@@ -269,12 +272,16 @@ public class Background{
 
     }
 
+    /**
+     * local method to display possible form
+     */
     private void createAppearance(int i, int j)
     {
         sprite = Resources.Load<Sprite>("AppearanceBlock");
 
         gameObjectArray[i, j] = new GameObject("Appearance");
-        gameObjectArray[i, j].transform.position = new Vector3(-7.176f + (i * 0.49f), 3.607f + (-j * 0.49f));
+        gameObjectArray[i, j].transform.position = new Vector3(-5f + (i * 0.49f), 5.45f + (-j * 0.49f));
+        gameObjectArray[i, j].transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
         gameObjectArray[i, j].AddComponent<SpriteRenderer>();
         gameObjectArray[i, j].GetComponent<SpriteRenderer>().sprite = sprite;
         gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingLayerName = "Background";

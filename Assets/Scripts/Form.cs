@@ -14,7 +14,8 @@ public class Form{
 
     public Form(int[,] playGround, Position startingPos)
     {
-        initiate(playGround, startingPos);
+        this.playGround = playGround;
+        initiate(startingPos);
         createForm();
         sort();
         for (int i = 0; i < endForm.Count; i++)
@@ -53,9 +54,9 @@ public class Form{
      * overwrite the existing playGround with the current playGround
      * define size of form
      */ 
-    private void initiate(int[,] playGround, Position startingPos)
+    private void initiate(Position startingPos)
     {
-        this.playGround = playGround;
+        
         this.startingPos = startingPos;
         counter = 5;
         tmpPosition.Add(new Position(startingPos.getX(), startingPos.getY()));
@@ -163,7 +164,7 @@ public class Form{
         endForm.Add(new Position(startingPos.getX() - 1, startingPos.getY()));
         tmpPosition.Add(new Position(startingPos.getX() - 1, startingPos.getY()));
         counter--;
-        playGround[startingPos.getX() - 1, startingPos.getY()] = 2;
+        this.playGround[startingPos.getX() - 1, startingPos.getY()] = 2;
 
     }
 
