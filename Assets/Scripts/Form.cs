@@ -28,8 +28,7 @@ public class Form{
      * Method to check, if the adjacent tiles are usable paths
      */ 
     private void checkOnWalls()
-    {
-        
+    { 
         if(checkRight())
         {
             addRight();  
@@ -272,6 +271,11 @@ public class Form{
             }
             end--;
         }
+    }
+
+    public List<Position> getEndForm()
+    {
+        return endForm;
     }
 
 }

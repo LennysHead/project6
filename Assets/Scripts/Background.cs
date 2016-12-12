@@ -7,6 +7,8 @@ using System;
 public class Background{
 
     int[,] playGround = new int[32, 15];
+    int[,] apperance = new int[5, 5];
+    int[,] presentForms = new int[5, 5];
     GameObject[,] gameObjectArray = new GameObject[32, 15];
     List<Position> walls = new List<Position>();
     System.Random rnd = new System.Random();
@@ -247,18 +249,36 @@ public class Background{
 
     private void findForms(int[, ] playGround)
     {
-        for(int i = 0; i < 32; i++)
+        Form foo = new Form(playGround, new Position(0, 0));
+           
+        for(int k = 0; k < foo.getEndForm().Count; k++)
         {
-            for(int j = 0; j< 15; j++)
+            apperance[foo.getEndForm()[k].getX(), foo.getEndForm()[k].getY()] = 1;        
+        }
+
+        for(int i = 0; i < 5; i++)
+        {
+            for(int j = 0; j < 5; j++)
             {
-                if(i == 0 && j == 0 && playGround[0,0] == 1)
+                if(apperance[i,j] == 1)
                 {
-                    Form form = new Form(playGround, new Position(0,0));
-                    
+                    createAppearance(i, j);
                 }
             }
         }
 
+    }
+
+    private void createAppearance(int i, int j)
+    {
+        sprite = Resources.Load<Sprite>("AppearanceBlock");
+
+        gameObjectArray[i, j] = new GameObject("Appearance");
+        gameObjectArray[i, j].transform.position = new Vector3(-7.176f + (i * 0.49f), 3.607f + (-j * 0.49f));
+        gameObjectArray[i, j].AddComponent<SpriteRenderer>();
+        gameObjectArray[i, j].GetComponent<SpriteRenderer>().sprite = sprite;
+        gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingLayerName = "Background";
+        gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingOrder = 1;
     }
 
     public int[,] getPlayground()
