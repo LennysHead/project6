@@ -8,7 +8,7 @@ public class Background{
 
     int[,] playGround = new int[32, 15];
     int[,] apperance = new int[5, 5];
-    int[,] presentForms = new int[5, 5];
+    GameObject[,] presentForms = new GameObject[5, 5];
     GameObject[,] gameObjectArray = new GameObject[32, 15];
     List<Position> walls = new List<Position>();
     System.Random rnd = new System.Random();
@@ -279,13 +279,13 @@ public class Background{
     {
         sprite = Resources.Load<Sprite>("AppearanceBlock");
 
-        gameObjectArray[i, j] = new GameObject("Appearance");
-        gameObjectArray[i, j].transform.position = new Vector3(-5f + (i * 0.49f), 5.45f + (-j * 0.49f));
-        gameObjectArray[i, j].transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
-        gameObjectArray[i, j].AddComponent<SpriteRenderer>();
-        gameObjectArray[i, j].GetComponent<SpriteRenderer>().sprite = sprite;
-        gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingLayerName = "Background";
-        gameObjectArray[i, j].GetComponent<SpriteRenderer>().sortingOrder = 1;
+        presentForms[i, j] = new GameObject("Appearance");
+        presentForms[i, j].transform.position = new Vector3(-5f + (i * 0.49f), 5.45f + (-j * 0.49f));
+        presentForms[i, j].transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+        presentForms[i, j].AddComponent<SpriteRenderer>();
+        presentForms[i, j].GetComponent<SpriteRenderer>().sprite = sprite;
+        presentForms[i, j].GetComponent<SpriteRenderer>().sortingLayerName = "Background";
+        presentForms[i, j].GetComponent<SpriteRenderer>().sortingOrder = 1;
     }
 
     public int[,] getPlayground()
