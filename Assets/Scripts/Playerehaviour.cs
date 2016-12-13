@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 [System.Serializable]
 public class Playerehaviour : MonoBehaviour {
 
-    string name;
+    List<Position> expectedForm = new List<Position>();
     List<string> moving = new List<string>();
     public int score = 0;
     int posX;
@@ -28,6 +29,7 @@ public class Playerehaviour : MonoBehaviour {
         {
           if(playGround[posX, posY-1] >= 1)
             {
+                UnityEngine.Debug.Log("W");
                 var speed = transform.position.y + 0.49f;
                 transform.position = new Vector3(transform.position.x, speed);
                 posY--;
@@ -40,6 +42,7 @@ public class Playerehaviour : MonoBehaviour {
         {
            if(playGround[posX, posY + 1] >= 1)
             {
+                UnityEngine.Debug.Log("S");
                 var speed = transform.position.y - 0.49f;
                 transform.position = new Vector3(transform.position.x, speed);
                 posY++;
@@ -50,6 +53,7 @@ public class Playerehaviour : MonoBehaviour {
         {
            if(playGround[posX-1, posY] >= 1)
             {
+                UnityEngine.Debug.Log("A");
                 var speed = transform.position.x - 0.49f;
                 transform.position = new Vector3(speed, transform.position.y);
                 posX--;
@@ -60,6 +64,7 @@ public class Playerehaviour : MonoBehaviour {
         {
             if(playGround[posX + 1, posY] >= 1)
             {
+                UnityEngine.Debug.Log("D");
                 var speed = transform.position.x + 0.49f;
                 transform.position = new Vector3(speed, transform.position.y);
                 posX++;
@@ -68,12 +73,35 @@ public class Playerehaviour : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftShift))
         {
             state = Constants.ISACTIVE;
+            addForm();
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             state = Constants.ISDEACTIVATED;
         }
 
+    }
+
+    private void addForm()
+    {
+        Boolean check = false;
+        if(expectedForm.Count == 0)
+        {
+            expectedForm.Add(new Position(posX, posY));
+        }else
+        {
+            for(int i = 0; i < expectedForm.Count; i++){
+                if (expectedForm[i].getX() == posX && expectedForm[i].getY() == posY)
+                {
+                    check = true;
+                }
+            }
+            if (!check)
+            {
+                expectedForm.Add(new Position(posX, posY));
+            }
+        }
+        
     }
 
     public int getState()
